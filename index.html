@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #7ef0c8, #7eb8f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .card {
+      background: #141420;
+      border: 1px solid #1e1e30;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #3a3a5c;
+    }
+
+    .card .thumbnail {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      user-select: none;
+    }
+
+    .card .thumbnail img {
+      width: 96px;
+      height: 96px;
+      border-radius: 22%;
+    }
+
+    .card .info {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card .info h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .card .info p {
+      font-size: 0.875rem;
+      color: #888;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card .tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: #1e1e30;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .version {
+      font-size: 0.75rem;
+      color: #666;
+      font-variant-numeric: tabular-nums;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #444;
+      font-size: 0.8rem;
+      line-height: 2;
+    }
+
+    footer a {
+      color: #666;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Software</h1>
+    <p>A collection of software I've built</p>
+  </header>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    <div><span id="count"></span></div>
+    <div>Developed by <a href="mailto:philip@foxpress.design?subject=Hey Philip">Philip Fox Jones</a> (<a href="https://foxpress.design">foxpress.design</a>)</div>
+    <div>
+      <a href="https://games.foxpress.io">Games</a> &middot;
+      <a href="https://portfolio.foxpress.io">Portfolio</a>
+    </div>
+  </footer>
+
+  <script>
+    const items = [
+      {
+        title: "Subfolder",
+        description: "A macOS app that uses AI to instantly organize your files. Drop a folder, get a plan, approve it, done.",
+        icon: "subfolder-icon.png",
+        color: "#0a1220",
+        url: "https://subfolder.app",
+        tags: ["macOS", "ai", "files"],
+        version: "0.8.4",
+      },
+    ];
+
+    const grid = document.getElementById("grid");
+    const countEl = document.getElementById("count");
+
+    countEl.textContent = `${items.length} project${items.length !== 1 ? "s" : ""}`;
+
+    items.forEach((item) => {
+      const card = document.createElement(item.url ? "a" : "div");
+      if (item.url) card.href = item.url;
+      card.className = "card";
+      card.innerHTML = `
+        <div class="thumbnail" style="background: ${item.color}">
+          ${item.icon ? `<img src="${item.icon}" alt="${item.title} icon" />` : item.emoji}
+        </div>
+        <div class="info">
+          <h2>${item.title}${item.version ? ` <span class="version">v${item.version}</span>` : ""}</h2>
+          <p>${item.description}</p>
+          <div class="tags">
+            ${item.tags.map((t) => `<span class="tag">${t}</span>`).join("")}
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
